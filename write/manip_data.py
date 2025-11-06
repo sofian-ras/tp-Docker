@@ -89,13 +89,15 @@ def modifier_film():
                 # row une ligne sous forme de liste
                 if row[0] == film_id:
                     print("Modification du film :")
-                    nouveau_film = creer_film(id_exist=int(film_id))
+                    nouveau_film = creer_film()
+                    nouveau_film.id = int(film_id)
+
                     films.append([
-                        str(nouveau_film.id),
+                        nouveau_film.id,
                         nouveau_film.titre,
-                        str(nouveau_film.annee_production),
+                        nouveau_film.annee_production,
                         nouveau_film.genre,
-                        str(nouveau_film.age_limite)
+                        nouveau_film.age_limite
                     ])
                     film_trouve = True
             else:
@@ -114,3 +116,29 @@ def modifier_film():
 
     except Exception as e:
         print("erreur lors de la modification :", e)
+
+
+def supprimer_film():
+    film_sup_id = input("selectionner l'id du film a supprimer: ")
+    films = []
+
+    try:
+        with open("data/movies.csv", "r", encoding="utf-8") as file:
+            reader = csv.reader(file)
+            header = next(reader)
+
+            for row in reader:
+                if row[0] != film_sup_id:
+                    films.append(row)
+
+        with open("data/movies.csv", "w", newline='',encoding="utf-8") as file:
+            writer = csv.writer(file)
+            writer.writerows(header)
+            writer.writerows(films)
+
+        print("film supprimé !")
+
+    except Exception as e:
+        print("erreur lors de la modification :", e)
+
+supprimer_film()
