@@ -1,6 +1,10 @@
 class Movie():
     id = 31
     def __init__(self, titre :str, annee_production :int, genre :str, age_limite :int):
+
+      
+        
+
         self.id= Movie.id
         Movie.id += 1
         self.titre=titre
