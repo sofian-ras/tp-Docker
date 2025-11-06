@@ -13,7 +13,51 @@ def liste_film():
     except FileNotFoundError:
         print("erreur lors de la saisie (*~*)")
 
-def filtre_genre(genre_recherche :str):
+
+# 1) Récupérer un film par son titre
+def recherche_par_titre(titre_recherche):
+    try:
+        with open("data/movies.csv", "r", encoding="utf-8") as file:
+            reader = csv.reader(file)
+            next(reader)
+
+            trouve = False
+            for row in reader:
+                if row[1].lower() == titre_recherche.lower():
+                    print(f"\nFilm trouvé : ")
+                    print(f"ID: {row[0]} | Titre: {row[1]} | Année: {row[2]} | Genre: {row[3]} | Âge min: {row[4]}")
+                    trouve = True
+
+        if not trouve:
+            print("Aucun film avec ce titre n'a été trouvé.")
+
+    except FileNotFoundError:
+        print("Erreur lors de la recherche")
+
+
+# 2) Films avec limite d’âge <= valeur donnée
+def films_par_age(max_age):
+    try:
+        with open("data/movies.csv", "r", encoding="utf-8") as file:
+            reader = csv.reader(file)
+            next(reader)
+
+            print(f"\n~~~~~~ Films avec âge ≤ {max_age} ~~~~~~")
+            trouve = False
+            for row in reader:
+                if int(row[4]) <= int(max_age):
+                    print(f"ID: {row[0]} | {row[1]} | Genre: {row[3]} | Âge min: {row[4]}")
+                    trouve = True
+
+        if not trouve:
+            print("Aucun film ne respecte cette limite d'âge.")
+
+    except FileNotFoundError:
+        print("Erreur lors de la recherche")
+
+
+# 3) Films d’un certain genre (déjà existant)
+def filtre_genre(genre_recherche):
     try:
         with open("data/movies.csv", "r", encoding="utf-8") as file:
             reader = csv.reader(file)
@@ -32,40 +76,56 @@ def filtre_genre(genre_recherche :str):
     except FileNotFoundError:
         print("erreur lors de la recherche")
 
-def filtre_annee(annee_recherche):
+
+# 4) Films entre deux années
+def films_entre_annees(debut, fin):
     try:
         with open("data/movies.csv", "r", encoding="utf-8") as file:
             reader = csv.reader(file)
             next(reader)
 
-            print(f"~~~~~~ films du genre : {annee_recherche} ~~~~~~")
+            print(f"\n~~~~~~ Films entre {debut} et {fin} ~~~~~~")
             trouve = False
             for row in reader:
-                if row[2] == str(annee_recherche):
-                    print(f"ID: {row[0]} | Titre: {row[1]} | genre: {row[3]} | Âge min: {row[4]}")
+                if int(debut) <= int(row[2]) <= int(fin):
+                    print(f"ID: {row[0]} | {row[1]} | Année: {row[2]} | Genre: {row[3]}")
                     trouve = True
 
         if not trouve:
-            print("aucun film de cette année n'a été trouvé")
+            print("Aucun film trouvé dans cette période.")
 
     except FileNotFoundError:
-        print("erreur lors de la recherche")
+        print("Erreur lors de la recherche")
 
 
-
+# Menu principal
 if __name__ == "__main__":
     liste_film()
 
-    print("~~~~ filtrer les films ~~~~")
-    choix = input("Filtrer par (g)enre ou (a)nnée ?")
+    print("\n~~~~ Actions disponibles ~~~~")
+    print("1: Chercher par titre")
+    print("2: Films avec âge maximum")
+    print("3: Films d'un genre")
+    print("4: Films entre deux années")
 
-    if choix.lower() == "g":
-        genre = input("entrez le genre : ")
+    choix = input("Votre choix : ")
+
+    if choix == "1":
+        titre = input("Entrez le titre : ")
+        recherche_par_titre(titre)
+
+    elif choix == "2":
+        age = input("Âge maximum : ")
+        films_par_age(age)
+
+    elif choix == "3":
+        genre = input("Genre : ")
         filtre_genre(genre)
 
-    elif choix.lower() == "a":
-        annee = input("entrez l'année : ")
-        filtre_annee(annee)
+    elif choix == "4":
+        debut = input("Année début : ")
+        fin = input("Année fin : ")
+        films_entre_annees(debut, fin)
 
     else:
-        print("choix non valide.")
+        print("Choix non valide.")

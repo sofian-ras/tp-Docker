@@ -1,0 +1,15 @@
+services:
+  write:
+    build: ./write
+    container_name: write_container
+    volumes:
+      - data_volume:/app/data
+
+  read:
+    build: ./read
+    container_name: read_container
+    volumes:
+      - data_volume:/app/data
+
+volumes:
+  data_volume:
