@@ -100,8 +100,8 @@ def modifier_film():
                         nouveau_film.age_limite
                     ])
                     film_trouve = True
-            else:
-                films.append(row)
+                else:
+                    films.append(row)
 
         if not film_trouve:
             print(f"Aucun film trouvé avec l'id {film_id}.")
@@ -141,4 +141,5 @@ def supprimer_film():
     except Exception as e:
         print("erreur lors de la modification :", e)
 
+modifier_film()
 supprimer_film()

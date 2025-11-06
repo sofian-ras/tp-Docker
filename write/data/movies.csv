@@ -1,8 +1,4 @@
-i,d
-t,i,t,r,e
-a,n,n,e,e,_,p,r,o,d,u,c,t,i,o,n
-g,e,n,r,e
-a,g,e,_,l,i,m,i,t,e
+id,titre,annee_production,genre,age_limite
 1,The Shawshank Redemption,1994,Drame,12
 2,The Godfather,1972,Crime,16
 3,The Dark Knight,2008,Action,12
@@ -38,3 +34,4 @@ a,g,e,_,l,i,m,i,t,e
 33,kuch kuch hota hai,1998,Bollywood,12
 34,7 vies,2015,thriller,8
 35,les 4 fantastiques,2002,action,6
+36,fdgdfg4,4,ff,55
